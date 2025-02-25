@@ -1,0 +1,24 @@
+{
+   "name": "compute-fabric-orchestrator",
+   "version": "0.1.0",
+   "description": "ComputeFabric Orchestrator - MVP service for job scheduling and management",
+   "type": "module",
+   "main": "dist/index.js",
+   "scripts": {
+      "dev": "nodemon --watch src --exec ts-node src/index.ts",
+      "build": "tsc",
+      "start": "node dist/index.js"
+   },
+   "dependencies": {
+      "express": "^4.18.2"
+   },
+   "devDependencies": {
+      "@types/express": "^4.17.17",
+      "@types/node": "^20.3.1",
+      "nodemon": "^3.1.9",
+      "ts-node": "^10.9.1",
+      "typescript": "^4.9.5"
+   },
+   "author": "ComputeFabric Team",
+   "license": "MIT"
+}

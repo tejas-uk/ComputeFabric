@@ -1,0 +1,27 @@
+/**
+ * @description
+ * This TypeScript configuration file extends the root "tsconfig.json" to enable
+ * a separate build for the Provider. It outputs compiled files to "dist".
+ *
+ * Key features:
+ * - Extends the root config to share common compiler settings
+ * - Sets "outDir" to "dist" for compiled output
+ * - Sets "rootDir" to "src" for organized source
+ * - Includes only files in "src"
+ *
+ * @notes
+ * - This approach mirrors the Orchestrator's tsconfig.json for consistency.
+ */
+
+ {
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+      "outDir": "dist",
+      "rootDir": "src"
+    },
+    "include": [
+      "src"
+    ]
+  }
+  
+  

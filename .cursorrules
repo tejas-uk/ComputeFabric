@@ -1,0 +1,548 @@
+### Project Instructions
+
+Use the project specification and guidelines as you build **ComputeFabric**.
+
+Your goal is to **completely finish** whatever is asked. For the MVP, focus on **basic scheduling, containerized execution, payment, and essential UI**.
+
+> (MVP NOTE): The project includes multiple apps/services (orchestrator, client, provider, and Next.js web dashboard). Each part should follow the same high-level coding practices and environment rules.
+> 
+
+---
+
+### Overview
+
+We are building **ComputeFabric**, a decentralized platform connecting idle GPU resources with those who need them.
+
+This repository also contains the Next.js code for a minimal web dashboard (and uses Tailwind, Shadcn, and Framer Motion).
+
+> (MVP NOTE): Additional apps (orchestrator, client, provider) live in their respective folders.
+> 
+
+---
+
+### Tech Stack
+
+- **Frontend (Minimal Web Dashboard)**: Next.js, Tailwind, Shadcn, Framer Motion
+- **Orchestrator (Backend)**: Node.js or Python-based, Docker for containerization
+- **Provider**: Simple background service for GPU owners, also using Docker for job execution
+- **Client**: Lightweight Electron app **or** CLI for job submission
+
+---
+
+### Project Structure
+
+> (MVP NOTE): We keep the Next.js rules (below) for the app, actions, components, lib, public, and types directories. Additional folders (orchestrator, client, provider) are added for the MVP’s functionality.
+> 
+1.
+
+```
+app
+```
+
+— Next.js **app router**:
+    - Each route can have a
+
+```
+layout.tsx
+```
+
+,
+
+```
+page.tsx
+```
+
+, and a
+
+```
+/_components
+```
+
+directory.
+    - Example routes:
+        -
+
+```
+app/dashboard
+```
+
+-
+
+```
+app/jobs
+```
+
+-
+
+```
+app/gpu-owners
+```
+
+2.
+
+```
+components
+```
+
+— Shared UI components (Tailwind + Shadcn).
+3.
+
+```
+lib
+```
+
+— Library code, custom hooks (under
+
+```
+lib/hooks
+```
+
+), utility functions, etc.
+4.
+
+```
+public
+```
+
+— Static assets.
+5.
+
+```
+types
+```
+
+— Shared types.
+6.
+
+```
+actions
+```
+
+— **Next.js Server Actions** for server-side logic in the Next.js app.
+7. **(MVP)
+
+```
+orchestrator
+```
+
+- * — For job scheduling, container orchestration, payment integration.
+8. **(MVP)
+
+```
+client
+```
+
+- * — Desktop or CLI app code for end users.
+9. **(MVP)
+
+```
+provider
+```
+
+- * — Background app/service for GPU owners.
+---
+### General Rules
+- Use
+
+```
+@
+```
+
+to import anything from the **Next.js** project unless otherwise specified.
+- Use **kebab case** for all files and folders unless otherwise specified.
+- **(MVP NOTE)**: For the orchestrator, provider, and client codebases, you can use standard import paths or local relative paths as needed. If they share code with the Next.js app, consider using a shared library in
+
+```
+lib
+```
+
+or a local package structure (e.g., Yarn workspaces, PNPM workspaces, etc.).
+
+---
+
+### Env Rules
+
+- If you update environment variables, update the
+
+```
+.env.example
+```
+
+file.
+- All environment variables should go in
+
+```
+.env.local
+```
+
+.
+- Do **not** expose sensitive environment variables to the frontend.
+- Use the
+
+```
+NEXT_PUBLIC_
+```
+
+prefix for environment variables that need to be accessed from the **Next.js** frontend only.
+- You may import environment variables in **server actions** and **server components** by using
+
+```
+process.env.VARIABLE_NAME
+```
+
+.
+- **(MVP NOTE)**: For orchestrator, provider, or client apps, keep their environment variables in their **own**
+
+```
+.env
+```
+
+or
+
+```
+.env.local
+```
+
+file. For example, orchestrator might need:
+    -
+
+```
+STRIPE_SECRET_KEY
+```
+
+-
+
+```
+ORCHESTRATOR_DATABASE_URL
+```
+
+-
+
+```
+DOCKER_HOST
+```
+
+- etc.
+
+---
+
+### Type Rules
+
+- When importing types **within the Next.js code**, use
+
+```
+@/types
+```
+
+.
+- Name type definition files like
+
+```
+example-types.ts
+```
+
+.
+- All types go in the
+
+```
+types
+```
+
+folder if they are used by the Next.js project.
+- Export them in
+
+```
+types/index.ts
+```
+
+.
+- **Prefer interfaces over type aliases** for data structures if possible.
+
+> (MVP NOTE): If the orchestrator, provider, and client share common types with the Next.js app, you can put those shared types in the root types folder. If they have unique types that do not overlap, place them in their own codebase folder (orchestrator/types, provider/types, etc.).
+> 
+
+**Example**:
+
+```
+ts
+Copy
+// types/job-types.ts
+export interface JobRequest {
+  jobId: string;
+  image: string;
+  command: string;
+  createdAt: Date;
+  // ...
+}
+```
+
+---
+
+### Frontend (Next.js) Rules
+
+We use **Next.js**, **Tailwind**, **Shadcn**, and **Framer Motion**.
+
+### General Rules
+
+- Use **
+
+```
+lucide-react
+```
+
+- * for icons.
+- Use
+
+```
+<div>
+```
+
+instead of other HTML tags unless otherwise specified.
+- Separate main parts of a component’s HTML with a blank line.
+- Use **actions**, not queries, in the app.
+- Always tag a component with either
+
+```
+"use server"
+```
+
+or
+
+```
+"use client"
+```
+
+at the top, including layouts and pages.
+
+### Organization
+
+- All components should be named in **kebab case** (e.g.,
+
+```
+example-component.tsx
+```
+
+) unless otherwise specified.
+- Put components in
+
+```
+/_components
+```
+
+if they are one-off for a specific route.
+- Put components in
+
+```
+components/
+```
+
+from the root if they are shared.
+
+### Data Fetching
+
+- Fetch data in **server components** and pass it down as props to client components whenever possible.
+- Use server **actions** from
+
+```
+/actions
+```
+
+to mutate data.
+
+---
+
+### Server Components
+
+- Use
+
+```
+"use server"
+```
+
+at the top of the file.
+- If asynchronous fetching is required, wrap the relevant part of your UI with
+
+```
+<Suspense>
+```
+
+and a fallback.
+- If no async logic is needed, return the final UI directly.
+
+**Example of a server layout**:
+
+```
+tsx
+tsx
+Copy
+"use server";
+
+export default async function ExampleServerLayout({ children }: { children: React.ReactNode }) {
+  return children;
+}
+```
+
+---
+
+### Client Components
+
+- Use
+
+```
+"use client"
+```
+
+at the top of the file.
+- Safe to rely on props from the server or handle UI interactions.
+
+**Example of a client component**:
+
+```
+tsx
+tsx
+Copy
+"use client";
+
+interface ExampleClientComponentProps {
+  initialData: any[];
+}
+
+export default function ExampleClientComponent({ initialData }: ExampleClientComponentProps) {
+  return <div>{initialData.length} items</div>;
+}
+```
+
+---
+
+### (MVP) Orchestrator, Provider, and Client Rules
+
+> While your existing rules focus on the Next.js app, the following notes guide the other ComputeFabric parts.
+> 
+1. **Orchestrator**
+    - If Node-based, maintain typical Node project structure:
+
+```
+src/
+```
+
+,
+
+```
+package.json
+```
+
+,
+
+```
+tsconfig.json
+```
+
+, etc.
+    - Keep container logic in a
+
+```
+containerization/
+```
+
+or
+
+```
+docker-manager.ts
+```
+
+file.
+    - Payment integration code (e.g., Stripe) in a
+
+```
+payment/
+```
+
+or
+
+```
+stripe-connector.ts
+```
+
+file.
+    - Expose a simple HTTP/HTTPS or gRPC interface for external requests (the Next.js app or client can call it).
+2. **Provider**
+    - Keep it lightweight. For Node-based, a single
+
+```
+main.ts
+```
+
+that runs a background process, registering GPU with the orchestrator and listening for jobs.
+    - Implement Docker job execution and usage reporting.
+    - Basic logging for debugging.
+3. **Client**
+    - If Electron: standard Electron structure with
+
+```
+main.ts
+```
+
+,
+
+```
+renderer/
+```
+
+, and
+
+```
+preload.ts
+```
+
+.
+    - If CLI: a single
+
+```
+index.ts
+```
+
+entry, possibly using a library like
+
+```
+yargs
+```
+
+or
+
+```
+commander
+```
+
+.
+    - Provides a basic interface to **submit GPU jobs** and track status.
+4. **Docker**
+    - Each sub-project that requires Docker (orchestrator, provider) should have its own
+
+```
+Dockerfile
+```
+
+.
+    - For local development, you can optionally have a
+
+```
+docker-compose.yml
+```
+
+at the root to orchestrate containers.
+
+---
+
+### Final Notes
+
+1. **Compliance & Security**
+    - For the MVP, minimal. Ensure basic TLS encryption in transit.
+    - Use Docker for container isolation.
+2. **Payment Flow**
+    - Stripe integration in orchestrator.
+    - Rates = time * fixed cost.
+3. **Fault Tolerance**
+    - Mark job as failed if a provider node goes down. (Advanced re-distribution can be future work.)
+4. **Next Steps**
+    - Collect feedback on scheduling efficiency, fault tolerance, usage-based billing.
+    - Expand advanced features as needed.

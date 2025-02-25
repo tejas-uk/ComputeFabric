@@ -1,0 +1,26 @@
+{
+    "name": "compute-fabric-provider",
+    "version": "0.1.0",
+    "description": "ComputeFabric Provider - MVP service that runs on GPU owners' machines to execute container jobs.",
+    "type": "module",
+    "main": "dist/main.js",
+    "scripts": {
+      "dev": "nodemon --watch src --exec ts-node src/main.ts",
+      "build": "tsc",
+      "start": "node dist/main.js"
+    },
+    "dependencies": {
+      "axios": "^1.5.0",
+      "dotenv": "^16.4.7"
+    },
+    "devDependencies": {
+      "@types/node": "^20.3.1",
+      "nodemon": "^3.1.9",
+      "ts-node": "^10.9.1",
+      "typescript": "^4.9.5"
+    },
+    "author": "ComputeFabric Team",
+    "license": "MIT"
+  }
+  
+  
