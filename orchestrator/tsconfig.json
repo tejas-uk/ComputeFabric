@@ -1,28 +1,14 @@
-/**
- * @description
- * This TypeScript configuration file extends the root "tsconfig.json" to enable
- * a separate build for the Orchestrator. It defines "src" as the root directory
- * and outputs compiled files to "dist".
- *
- * Key features:
- * - Extends from the root config so we share common compiler settings
- * - Sets "outDir" to "dist" to contain the Orchestrator's build artifacts
- * - Sets "rootDir" to "src", ensuring a consistent project structure
- *
- * @notes
- * - You can adjust "lib", "target", or other compiler options if needed
- * - The "include" property ensures we only compile files in "src"
- */
-
 {
-   "extends": "../tsconfig.json",
-   "compilerOptions": {
-     
-     "outDir": "dist",
-     "rootDir": "src"
-   },
-   "include": [
-     "src"
-   ]
- }
- 
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "outDir": "dist",
+    "rootDir": "src",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src"
+  ]
+}

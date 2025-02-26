@@ -4,19 +4,21 @@
    "description": "An Electron-based desktop client for ComputeFabric job submission and status tracking",
    "main": "dist/main.js",
    "scripts": {
-    "build:main": "tsc",
-    "build:renderer": "vite build",
-    "build": "npm run build:main && npm run build:renderer",
-    "start": "npm run build && electron dist/main.js"
+      "build:main": "tsc",
+      "build:renderer": "vite build",
+      "build": "npm run build:main && npm run build:renderer",
+      "start": "npm run build && electron dist/main.js"
    },
    "author": "ComputeFabric Team",
    "license": "MIT",
    "dependencies": {
       "@types/axios": "^0.9.36",
+      "@types/uuid": "^10.0.0",
       "axios": "^1.8.0",
       "electron": "^25.2.0",
       "react": "^18.2.0",
-      "react-dom": "^18.2.0"
+      "react-dom": "^18.2.0",
+      "uuid": "^11.1.0"
    },
    "devDependencies": {
       "@types/node": "^20.3.1",
