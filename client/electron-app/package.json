@@ -1,0 +1,25 @@
+
+ {
+   "name": "compute-fabric-electron-client",
+   "version": "0.1.0",
+   "description": "An Electron-based desktop client for ComputeFabric job submission and status tracking",
+   "main": "dist/main.js",
+   "scripts": {
+     "build": "tsc",
+     "start": "npm run build && electron dist/main.js"
+   },
+   "author": "ComputeFabric Team",
+   "license": "MIT",
+   "dependencies": {
+     "electron": "^25.2.0",
+     "react": "^18.2.0",
+     "react-dom": "^18.2.0"
+   },
+   "devDependencies": {
+     "@types/node": "^20.3.1",
+     "@types/react": "^18.2.15",
+     "@types/react-dom": "^18.2.7",
+     "typescript": "^4.9.5"
+   }
+ }
+ 

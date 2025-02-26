@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ComputeFabric</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="../dist/renderer/App.js"></script>
+  <script>
+    /**
+     * @description
+     * Bootstraps the React application by rendering the App component into the root div.
+     *
+     * @notes
+     * - Uses UMD builds of React and ReactDOM for simplicity in dev mode.
+     * - Assumes App.js exports a default React component after TSC compilation.
+     * - Handles cases where the root element or App component isn't found.
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+      const rootElement = document.getElementById('root');
+      if (!rootElement) {
+        console.error('Root element not found');
+        return;
+      }
+
+      // Check if App is available from the compiled App.js
+      if (typeof App === 'undefined') {
+        console.error('App component not found. Ensure `npm run build` has been run.');
+        rootElement.innerHTML = `
+          <div class="p-8 max-w-6xl mx-auto">
+            <h1 class="text-3xl font-bold mb-4">ComputeFabric GPU Job Manager</h1>
+            <p class="mb-4 text-red-500">Error: App component not loaded.</p>
+            <div class="text-gray-500">
+              Please ensure you've built the TypeScript files:
+              <pre class="bg-gray-100 p-2 mt-2 rounded">npm run build</pre>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // Render the App component
+      ReactDOM.render(React.createElement(App), rootElement);
+    });
+  </script>
+</body>
+</html>
